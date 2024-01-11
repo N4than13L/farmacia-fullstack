@@ -47,6 +47,6 @@ class Bill extends Model
     // relacion de muchos datos a una medicina. 
     public function medicine()
     {
-        return $this->belongsTo(Medicine::class, 'mediccine_id');
+        return $this->belongsTo(Medicine::class, 'medicine_id');
     }
 }

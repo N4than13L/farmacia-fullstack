@@ -34,7 +34,7 @@ class Medicine extends Model
     // relacion de muchos datos al tipo de medicina
     public function type_medicine()
     {
-        return $this->belongsTo(Type_medicine::class, 'type_medicines_id');
+        return $this->belongsTo(Type_medicine::class, 'type_medicine_id');
     }
 
     // relacion de muchos datos de los efectos secundarios 
