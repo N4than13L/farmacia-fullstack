@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class TypeMedicineController extends Controller
 {
-    //
+    public function test(Request $request)
+    {
+        return "controlador para el tipo de medicamentos";
+    }
 }

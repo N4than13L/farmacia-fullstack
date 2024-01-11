@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    //
+    public function test(Request $request)
+    {
+        return "controlador de clientes";
+    }
 }
