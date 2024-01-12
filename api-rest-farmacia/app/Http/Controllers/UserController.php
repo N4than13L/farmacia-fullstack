@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -24,7 +25,8 @@ class UserController extends Controller
         $validate = Validator::make($params_array, [
             'name' => 'required|alpha',
             'surname' => 'required|alpha',
-            'email' => 'required|email',
+            // comprobar si el usuario existe (duplicado)
+            'email' => 'required|email|unique:user',
             'password' => 'required',
         ]);
 
@@ -51,14 +53,28 @@ class UserController extends Controller
                 );
 
                 // cifrar la contrasena
-                // comprobar si el usuario existe (duplicado)
+                $pwd = password_hash($params->password, PASSWORD_BCRYPT, ['cost' => 4]);
+
                 // crear el usuario
+                $user = new User();
+                $user->name = $params_array['name'];
+                $user->surname = $params_array['surname'];
+                $user->email = $params_array['email'];
+                $user->password = $pwd;
+                $user->role = "Employer";
+
+                // guardar usuario
+                $user->save();
+
+                // var_dump($user);
+                // die();
 
                 // devolver respuesta
                 $data  = array(
                     "status" => "success",
                     "code" => 200,
-                    "message" => "datos sacados con exito"
+                    "message" => "datos sacados con exito",
+                    "user" => $user
                 );
 
                 return response()->json($data,  $data['code']);
