@@ -169,6 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),
+    App\Providers\AppServiceProvider::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -184,5 +185,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+
+    'JwtAuth' => App\Helpers\JwtAuth::class
 
 ];

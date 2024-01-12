@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\JwtAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -25,8 +26,7 @@ class UserController extends Controller
         $validate = Validator::make($params_array, [
             'name' => 'required|alpha',
             'surname' => 'required|alpha',
-            // comprobar si el usuario existe (duplicado)
-            'email' => 'required|email|unique:user',
+            'email' => 'required|email|unique:user', //  comprobar si el usuario existe (duplicado).
             'password' => 'required',
         ]);
 
@@ -40,7 +40,7 @@ class UserController extends Controller
                 $data  = array(
                     "status" => "error",
                     "code" => 400,
-                    "message" => "no guardados, favor inserte correctamente",
+                    "message" => "Error al registrar, favor inserte correctamente",
                     "errors" => $validate->errors()
                 );
 
@@ -49,7 +49,7 @@ class UserController extends Controller
                 $data  = array(
                     "status" => "success",
                     "code" => 200,
-                    "message" => "usuario guardado con exito",
+                    "message" => "Usuario guardado con exito",
                 );
 
                 // cifrar la contrasena
@@ -73,7 +73,7 @@ class UserController extends Controller
                 $data  = array(
                     "status" => "success",
                     "code" => 200,
-                    "message" => "datos sacados con exito",
+                    "message" => "Usuario guardado con exito",
                     "user" => $user
                 );
 
@@ -83,7 +83,7 @@ class UserController extends Controller
             $data  = array(
                 "status" => "error",
                 "code" => 400,
-                "message" => "error al guardar datos",
+                "message" => "Error al registrar datos del usuario",
             );
         }
 
@@ -92,6 +92,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        return "Login de usuarios";
+        $jwtAuth = new JwtAuth();
+        return $jwtAuth->signup();
     }
 }
