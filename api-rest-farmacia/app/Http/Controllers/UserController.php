@@ -53,7 +53,7 @@ class UserController extends Controller
                 );
 
                 // cifrar la contrasena
-                $pwd = password_hash($params->password, PASSWORD_BCRYPT, ['cost' => 4]);
+                $pwd = hash("sha256", $params->password);
 
                 // crear el usuario
                 $user = new User();
@@ -93,6 +93,38 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $jwtAuth = new JwtAuth();
-        return $jwtAuth->signup();
+
+        // Recibir los datos por POST.
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+        $params_array = json_decode($json, true);
+
+        // Validar esos datos.
+        $validate = Validator::make($params_array, [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            // Error al enviar los datos 
+            $signup = array(
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'Usuario no ha podido hacer el login',
+                'errors' => $validate->errors()
+            );
+        } else {
+            // Cifrar la contrasena.
+            $pwd = hash('sha256', $params->password);
+
+            // Devolver los datos del token.
+            $signup = $jwtAuth->signup($params->email, $pwd);
+
+            if (!empty($params->gettoken)) {
+                $signup = $jwtAuth->signup($params->email, $pwd, true);
+            }
+        }
+
+        return response()->json($signup, 200);
     }
 }

@@ -8,16 +8,56 @@ use App\Models\User;
 
 class JwtAuth
 {
-    public function signup()
+
+    public $key;
+    public function __construct()
     {
-        // buscar el email y contrasena
+        $this->key = 'algo_que_no_se-67654';
+    }
 
-        // comprobar si son correctos (objeto)
+    public function signup($email, $password, $getToken = null)
+    {
+        // Buscar si existe el usuario con sus credenciales.
+        $user = User::where([
+            'email' => $email,
+            'password' => $password
+        ])->first();
 
-        // generar el token del usuario identificados
+        // Comprobando si las mismas son correctas.
+        $signup = false;
+        if (is_object($user)) {
+            $signup = true;
+        }
 
-        // devolver datos del usuario identificado
+        // Generar el token con los datos del usuario.
+        if ($signup) {
+            $token = array(
+                'sub' => $user->id,
+                'email' => $user->email,
+                'name' => $user->name,
+                'surname' => $user->surname,
+                "description" => $user->description,
+                "image" => $user->image,
+                'iat' => time(),
+                'exp' => time() + (7 * 24 * 60 * 60)
+            );
 
-        return "Hola desde helper";
+            // Devolver datos decodificados
+            $jwt = JWT::encode($token, $this->key, 'HS256');
+            $decoded = JWT::decode($jwt, $this->key, ['HS256']);
+
+            if (is_null($getToken)) {
+                $data = $jwt;
+            } else {
+                $data = $decoded;
+            }
+        } else {
+            $data = array(
+                'status' => 'error',
+                'message' => 'Login Incorecto'
+            );
+        }
+
+        return $data;
     }
 }
