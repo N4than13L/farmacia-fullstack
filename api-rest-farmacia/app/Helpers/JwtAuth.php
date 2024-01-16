@@ -19,8 +19,7 @@ class JwtAuth
     {
         // Buscar si existe el usuario con sus credenciales.
         $user = User::where([
-            'email' => $email,
-            'password' => $password
+            'email' => $email
         ])->first();
 
         // Comprobando si las mismas son correctas.

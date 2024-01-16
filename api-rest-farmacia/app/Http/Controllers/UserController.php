@@ -66,9 +66,6 @@ class UserController extends Controller
                 // guardar usuario
                 $user->save();
 
-                // var_dump($user);
-                // die();
-
                 // devolver respuesta
                 $data  = array(
                     "status" => "success",
@@ -115,7 +112,7 @@ class UserController extends Controller
             );
         } else {
             // Cifrar la contrasena.
-            $pwd = hash('sha256', $params->password);
+            $pwd = $params->password;
 
             // Devolver los datos del token.
             $signup = $jwtAuth->signup($params->email, $pwd);
