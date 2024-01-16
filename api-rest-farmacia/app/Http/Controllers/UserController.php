@@ -124,4 +124,81 @@ class UserController extends Controller
 
         return response()->json($signup, 200);
     }
+
+    public function update(Request $request)
+    {
+        // recoger token por la cabezera
+        $token = $request->header("Authorization");
+        $jwtAuth = new JwtAuth();
+
+        // sacar datos del usuario identificado via token
+        $checkToken = $jwtAuth->checkToken($token);
+
+        // Recibir los datos por POST.
+        $json = $request->input('json', null);
+        $params_array = json_decode($json, true);
+
+        if ($checkToken && !empty($params_array)) {
+
+            // recoger datos por post.
+            $jwtAuth = new JwtAuth();
+
+            $user = $jwtAuth->checkToken($token, true);
+
+            // validar datos.
+            $validate = Validator::make($params_array, [
+                'name' => 'required|alpha',
+                'surname' => 'required|alpha',
+                'email' => 'required|email|unique:user,' . $user->sub
+            ]);
+
+            // quitar campos que no se nesecitan.
+            unset($params_array['id']);
+            unset($params_array['role']);
+            unset($params_array['password']);
+            unset($params_array['created_at']);
+            unset($params_array['remember_token']);
+
+            // actualizar datos de usuario
+            $user_update = User::where('id', $user->sub)->update($params_array);
+
+            // devolver array con el resultado
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "message" => "datos actualizados con exito",
+                "user" => $user,
+                "changes" => $params_array
+            );
+        } else {
+            $data = array(
+                "status" => "success",
+                "code" => 500,
+                "message" => "No se pueden actuaizar los datos, intente más tarde"
+            );
+        }
+
+        return response()->json($data, $data['code']);
+    }
+
+    public function profile($id)
+    {
+        $user = User::find($id);
+
+        if (is_object($user)) {
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                $user
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 404,
+                "message" => "Datos no coinciden"
+            );
+        }
+
+        return response()->json($data, $data['code']);
+    }
 }
