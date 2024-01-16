@@ -21,33 +21,16 @@ use App\Http\Controllers\MedicineController;
 |
 */
 
-// Route::get('/', function () {
-//     return "<h1>Probando ORM</h1>";
-// });
-
-// Route::get('/', [BillController::class, 'index']);
-
-// rutas del A.P.I para pruebas
-Route::get('/user/test', [UserController::class, 'test']);
-
-Route::get('/bill/test', [BillController::class, 'test']);
-
-Route::get('/client/test', [ClientController::class, 'test']);
-
-Route::get('/effect/test', [EffectController::class, 'test']);
-
-Route::get('/employee/test', [EmployeeController::class, 'test']);
-
-Route::get('/medicine/test', [MedicineController::class, 'test']);
-
-Route::get('/suplier/test', [SupplierController::class, 'test']);
-
-Route::get('/typemedicine/test', [TypeMedicineController::class, 'test']);
+Route::get('/', function () {
+    return "<h1>Probando ORM</h1>";
+});
 
 // rutas del A.P.I
+// registro
 Route::post('/api/register', [UserController::class, 'register']);
-
+// login
 Route::post('/api/login', [UserController::class, 'login']);
-
+// actualizar
 Route::post('/api/user/update', [UserController::class, 'update']);
+// ver perfil
 Route::get('/api/user/profile/{id}', [UserController::class, 'profile']);
