@@ -10,6 +10,8 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TypeMedicineController;
 use App\Http\Controllers\MedicineController;
 
+use App\Http\Middleware\ApiAuthMiddleware;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +33,10 @@ Route::post('/api/register', [UserController::class, 'register']);
 // login
 Route::post('/api/login', [UserController::class, 'login']);
 // actualizar
-Route::post('/api/user/update', [UserController::class, 'update']);
+Route::post('/api/user/update', [UserController::class, 'update'])->middleware(ApiAuthMiddleware::class);;
 // ver perfil
-Route::get('/api/user/profile/{id}', [UserController::class, 'profile']);
+Route::get('/api/user/profile/{id}', [UserController::class, 'profile'])->middleware(ApiAuthMiddleware::class);
+
+Route::get('/api/clients', [ClientController::class, 'index'])->middleware(ApiAuthMiddleware::class);
+
+Route::get('/api/clients/{id}', [ClientController::class, 'show'])->middleware(ApiAuthMiddleware::class);
