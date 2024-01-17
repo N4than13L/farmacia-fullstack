@@ -37,6 +37,11 @@ Route::post('/api/user/update', [UserController::class, 'update'])->middleware(A
 // ver perfil
 Route::get('/api/user/profile/{id}', [UserController::class, 'profile'])->middleware(ApiAuthMiddleware::class);
 
+// Clientes
 Route::get('/api/clients', [ClientController::class, 'index'])->middleware(ApiAuthMiddleware::class);
 
 Route::get('/api/clients/{id}', [ClientController::class, 'show'])->middleware(ApiAuthMiddleware::class);
+
+Route::post('/api/clients/agregar', [ClientController::class, 'save'])->middleware(ApiAuthMiddleware::class);
+
+Route::post('/api/clients/update/{id}', [ClientController::class, 'update'])->middleware(ApiAuthMiddleware::class);
