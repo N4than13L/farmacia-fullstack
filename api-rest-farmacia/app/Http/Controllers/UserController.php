@@ -61,19 +61,29 @@ class UserController extends Controller
                 $user->surname = $params_array['surname'];
                 $user->email = $params_array['email'];
                 $user->password = $pwd;
-                $user->role = "Employer";
+                $user->role = $params_array['role'];
 
-                // guardar usuario
-                $user->save();
+                if ($params_array['role'] == "empleado" || $params_array['role'] == "empleador") {
+                    // guardar usuario
+                    $user->save();
 
-                // devolver respuesta
-                $data  = array(
-                    "status" => "success",
-                    "code" => 200,
-                    "message" => "Usuario guardado con exito",
-                    "user" => $user
-                );
+                    // devolver respuesta
+                    $data  = array(
+                        "status" => "success",
+                        "code" => 200,
+                        "message" => "Usuario guardado con exito",
+                        "user" => $user
+                    );
+                } else {
+                    $data  = array(
+                        "status" => "error",
+                        "code" => 405,
+                        "message" => "Debes usar los roles de empleado o empleador",
 
+                    );
+                }
+
+                // devolver respuesta. 
                 return response()->json($data,  $data['code']);
             }
         } else {
