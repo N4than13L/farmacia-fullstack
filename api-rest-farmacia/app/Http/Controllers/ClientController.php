@@ -33,6 +33,7 @@ class ClientController extends Controller
                 return response()->json([
                     "status" => "success",
                     "code" => 200,
+                    "user" => $user->name . " " . $user->surname,
                     'client' => $client
                 ]);
             } else {
@@ -57,7 +58,7 @@ class ClientController extends Controller
         return response()->json([
             "status" => "success",
             "code" => 200,
-            "created_by" => $user,
+            "user" => $user->name . " " . $user->surname,
             "client" => $client
         ]);
     }
@@ -103,7 +104,8 @@ class ClientController extends Controller
                 "status" => "success",
                 "code" => 200,
                 "message" => "cliente guardado con exito",
-                "client" => $client
+                "user" => $user->name . " " . $user->surname,
+                "client" => $client,
             );
         } else {
             $data = array(
