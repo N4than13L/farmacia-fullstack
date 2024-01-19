@@ -4,11 +4,118 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Type_medicine;
+use App\Helpers\JwtAuth;
+use Illuminate\Support\Facades\Validator;
 
 class TypeMedicineController extends Controller
 {
-    public function test(Request $request)
+    public function index(Request $request)
     {
-        return "controlador para el tipo de medicamentos";
+        $type_medicine = Type_medicine::all();
+
+        $data = array(
+            "status" => "success",
+            "code" => 200,
+            "secondary_effects" => $type_medicine
+        );
+
+        return response()->json($data, $data['code']);
+    }
+
+    public function save(Request $request)
+    {
+        // recoger datos por post 
+        // recoger token por la cabezera
+        $token = $request->header("Authorization");
+        $jwtAuth = new JwtAuth();
+
+        // sacar datos del usuario identificado via token
+        $checkToken = $jwtAuth->checkToken($token);
+
+        // Recibir los datos por POST.
+        $json = $request->input('json', null);
+        $params_array = json_decode($json, true);
+
+        if ($checkToken && !empty($params_array)) {
+            // recoger datos por post.
+            $jwtAuth = new JwtAuth();
+
+            $user = $jwtAuth->checkToken($token, true);
+
+            // validar datos.
+            $validate = Validator::make($params_array, [
+                'name' => 'required|alpha',
+                'user_id' => 'required' . $user->sub
+            ]);
+
+            // guardar cliente
+            $type_medicine = new Type_medicine();
+            $type_medicine->name = $params_array['name'];
+            $type_medicine->user_id = $user->sub;
+
+            $type_medicine->save();
+
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "message" => "effectos guardado con exito",
+                "user" => $user->name . " " . $user->surname,
+                "secondary_effects" => $type_medicine,
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "message" => "Llena los datos correspondientes"
+            );
+        }
+
+        // devolver resultado
+        return response()->json($data, $data['code']);
+    }
+
+    public function detail(Request $request, $id)
+    {
+        $token = $request->header("Authorization");
+        $jwtAuth = new JwtAuth();
+        $user = $jwtAuth->checkToken($token, true);
+
+        $type_medicine = Type_medicine::find($id);
+
+        if ($user) {
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "user" => $user->name . " " . $user->surname,
+                "secondary_effects" => $type_medicine,
+            );
+        }
+
+        return response()->json($data, $data['code']);
+    }
+
+    public function delete(Request $request, $id)
+    {
+
+        $token = $request->header("Authorization");
+        $jwtAuth = new JwtAuth();
+        $user = $jwtAuth->checkToken($token, true);
+
+        $type_medicine = Type_medicine::find($id);
+
+        if ($user->sub == $type_medicine->user_id) {
+
+            $type_medicine->delete();
+
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "message" => "registro de la tabla ha sido eliminado",
+                "type_medicine" => $type_medicine,
+            );
+        }
+
+        return response()->json($data, $data['code']);
     }
 }
