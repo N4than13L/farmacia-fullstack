@@ -47,16 +47,16 @@ Route::post('/api/clients/update/{id}', [ClientController::class, 'update'])->mi
 
 // rutas para efectos de las medicinas.
 // ver
-Route::get('/api/index', [EffectController::class, 'index'])->middleware(ApiAuthMiddleware::class);
+Route::get('/api/seceffects/index', [EffectController::class, 'index'])->middleware(ApiAuthMiddleware::class);
 
 // guardar
-Route::post('/api/save', [EffectController::class, 'save'])->middleware(ApiAuthMiddleware::class);
+Route::post('/api/seceffects/save', [EffectController::class, 'save'])->middleware(ApiAuthMiddleware::class);
 
 // sacar uno
-Route::get('/api/detail/{id}', [EffectController::class, 'detail'])->middleware(ApiAuthMiddleware::class);
+Route::get('/api/seceffects/detail/{id}', [EffectController::class, 'detail'])->middleware(ApiAuthMiddleware::class);
 
 // eliminar
-Route::get('/api/delete/{id}', [EffectController::class, 'delete'])->middleware(ApiAuthMiddleware::class);
+Route::get('/api/seceffects/delete/{id}', [EffectController::class, 'delete'])->middleware(ApiAuthMiddleware::class);
 
 // tipo de medicina. 
 Route::get('/api/typemedicine/index', [TypeMedicineController::class, 'index'])->middleware(ApiAuthMiddleware::class);
