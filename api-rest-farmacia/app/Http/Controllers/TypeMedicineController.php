@@ -75,6 +75,58 @@ class TypeMedicineController extends Controller
         return response()->json($data, $data['code']);
     }
 
+    public function update(Request $request, $id)
+    {
+        // recoger datos por post 
+        // recoger token por la cabezera
+        $token = $request->header("Authorization");
+        $jwtAuth = new JwtAuth();
+
+        // sacar datos del usuario identificado via token
+        $checkToken = $jwtAuth->checkToken($token);
+
+        // Recibir los datos por POST.
+        $json = $request->input('json', null);
+        $params_array = json_decode($json, true);
+
+        if ($checkToken && !empty($params_array)) {
+            // recoger datos por post.
+            $jwtAuth = new JwtAuth();
+
+            $user = $jwtAuth->checkToken($token, true);
+
+            // validar datos.
+            $validate = Validator::make($params_array, [
+                'name' => 'required|alpha',
+                'user_id' => 'required' . $user->sub
+            ]);
+
+            // guardar cliente
+            $type_medicine = Type_medicine::find($id);
+            $type_medicine->name = $params_array['name'];
+            $type_medicine->user_id = $user->sub;
+
+            $type_medicine->update();
+
+            $data = array(
+                "status" => "success",
+                "code" => 200,
+                "message" => "effectos guardado con exito",
+                "user" => $user->name . " " . $user->surname,
+                "secondary_effects" => $type_medicine,
+            );
+        } else {
+            $data = array(
+                "status" => "error",
+                "code" => 400,
+                "message" => "Llena los datos correspondientes"
+            );
+        }
+
+        // devolver resultado
+        return response()->json($data, $data['code']);
+    }
+
     public function detail(Request $request, $id)
     {
         $token = $request->header("Authorization");

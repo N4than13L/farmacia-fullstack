@@ -5,7 +5,6 @@ use App\Http\Controllers\BillController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EffectController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TypeMedicineController;
 use App\Http\Controllers\MedicineController;
@@ -58,3 +57,28 @@ Route::get('/api/detail/{id}', [EffectController::class, 'detail'])->middleware(
 
 // eliminar
 Route::get('/api/delete/{id}', [EffectController::class, 'delete'])->middleware(ApiAuthMiddleware::class);
+
+// tipo de medicina. 
+Route::get('/api/typemedicine/index', [TypeMedicineController::class, 'index'])->middleware(ApiAuthMiddleware::class);
+// guardar medicina
+Route::post('/api/typemedicine/save', [TypeMedicineController::class, 'save'])->middleware(ApiAuthMiddleware::class);
+// actualiizar medicina.
+Route::post('/api/typemedicine/update/{id}', [TypeMedicineController::class, 'update'])->middleware(ApiAuthMiddleware::class);
+
+// mostrar 1.
+Route::get('/api/typemedicine/detail/{id}', [TypeMedicineController::class, 'detail'])->middleware(ApiAuthMiddleware::class);
+
+// eliminar.
+Route::delete('/api/typemedicine/delete/{id}', [TypeMedicineController::class, 'delete'])->middleware(ApiAuthMiddleware::class);
+
+// acciones para el suplidor.
+// mostrar todo. 
+Route::get('/api/supplier/index', [SupplierController::class, 'index'])->middleware(ApiAuthMiddleware::class);
+// acccion de guardar.
+Route::post('/api/suplier/save', [SupplierController::class, 'save'])->middleware(ApiAuthMiddleware::class);
+// actualizar
+Route::post('/api/suplier/update/{id}', [SupplierController::class, 'update'])->middleware(ApiAuthMiddleware::class);
+// mostrar 1
+Route::get('/api/suplier/detail/{id}', [SupplierController::class, 'detail'])->middleware(ApiAuthMiddleware::class);
+// eliminar
+Route::get('/api/suplier/delete/{id}', [SupplierController::class, 'delete'])->middleware(ApiAuthMiddleware::class);
