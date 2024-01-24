@@ -82,3 +82,19 @@ Route::post('/api/suplier/update/{id}', [SupplierController::class, 'update'])->
 Route::get('/api/suplier/detail/{id}', [SupplierController::class, 'detail'])->middleware(ApiAuthMiddleware::class);
 // eliminar
 Route::get('/api/suplier/delete/{id}', [SupplierController::class, 'delete'])->middleware(ApiAuthMiddleware::class);
+
+// rutas para la medicina
+// ver todas
+Route::get('/api/mediccine/index', [MedicineController::class, 'index'])->middleware(ApiAuthMiddleware::class);
+
+// guardar medicinas
+Route::post('/api/mediccine/save', [MedicineController::class, 'save'])->middleware(ApiAuthMiddleware::class);
+
+// guardar medicinas
+Route::post('/api/mediccine/update/{id}', [MedicineController::class, 'update'])->middleware(ApiAuthMiddleware::class);
+
+// ver detalle
+Route::get('/api/mediccine/detail/{id}', [MedicineController::class, 'detail'])->middleware(ApiAuthMiddleware::class);
+
+// eliminar medicamento
+Route::get('/api/mediccine/delete/{id}', [MedicineController::class, 'delete'])->middleware(ApiAuthMiddleware::class);
