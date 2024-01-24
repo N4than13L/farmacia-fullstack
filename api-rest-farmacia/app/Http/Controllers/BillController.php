@@ -50,7 +50,7 @@ class BillController extends Controller
                 'user_id' => 'required' . $user->sub,
                 'medicine_id' => "required",
                 'amount' => 'required',
-                "client_id" => "required"
+                "clients_id" => "required"
 
             ]);
 
@@ -108,7 +108,7 @@ class BillController extends Controller
                 'user_id' => 'required' . $user->sub,
                 'medicine_id' => "required",
                 'amount' => 'required',
-                "client_id" => "required"
+                "clients_id" => "required"
 
             ]);
 
@@ -119,7 +119,7 @@ class BillController extends Controller
             $bill->medicine_id = $params_array['medicine_id'];
             $bill->clients_id = $params_array['clients_id'];
 
-            $bill->update();
+            $bill->save();
 
             $data = array(
                 "status" => "success",
