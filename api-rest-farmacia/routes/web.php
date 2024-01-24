@@ -98,3 +98,19 @@ Route::get('/api/mediccine/detail/{id}', [MedicineController::class, 'detail'])-
 
 // eliminar medicamento
 Route::get('/api/mediccine/delete/{id}', [MedicineController::class, 'delete'])->middleware(ApiAuthMiddleware::class);
+
+// rutas de la factura.
+// indice.
+Route::get('/api/bill/index', [BillController::class, 'index'])->middleware(ApiAuthMiddleware::class);
+
+// guardar factura.
+Route::post('/api/bill/save', [BillController::class, 'save'])->middleware(ApiAuthMiddleware::class);
+
+// ver factura.
+Route::get('/api/bill/detail/{id}', [BillController::class, 'detail'])->middleware(ApiAuthMiddleware::class);
+
+// actualizar factura.
+Route::post('/api/bill/update/{id}', [BillController::class, 'update'])->middleware(ApiAuthMiddleware::class);
+
+// actualizar factura.
+Route::get('/api/bill/delete/{id}', [BillController::class, 'delete'])->middleware(ApiAuthMiddleware::class);

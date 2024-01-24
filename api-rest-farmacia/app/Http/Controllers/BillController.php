@@ -8,7 +8,6 @@ use App\Helpers\JwtAuth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Bill;
 
-
 class BillController extends Controller
 {
 
@@ -57,11 +56,10 @@ class BillController extends Controller
 
             // guardar cliente
             $bill = new Bill();
-            $bill->name = $params_array['name'];
+            $bill->amount = $params_array['amount'];
             $bill->user_id = $user->sub;
             $bill->medicine_id = $params_array['medicine_id'];
-            $bill->amount = $params_array['amount'];
-            $bill->client_id = $params_array['client_id'];
+            $bill->clients_id = $params_array['clients_id'];
             $bill->save();
 
             $data = array(
@@ -116,11 +114,11 @@ class BillController extends Controller
 
             // guardar factura
             $bill = new Bill();
-            $bill->name = $params_array['name'];
+            $bill->amount = $params_array['amount'];
             $bill->user_id = $user->sub;
             $bill->medicine_id = $params_array['medicine_id'];
-            $bill->amount = $params_array['amount'];
-            $bill->client_id = $params_array['client_id'];
+            $bill->clients_id = $params_array['clients_id'];
+
             $bill->update();
 
             $data = array(

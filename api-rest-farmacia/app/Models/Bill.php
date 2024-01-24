@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Client;
-use App\Models\Employee;
 use App\Models\Medicine;
 
 class Bill extends Model
@@ -36,12 +35,6 @@ class Bill extends Model
     public function clients()
     {
         return $this->belongsTo(Client::class, 'clients_id');
-    }
-
-    // relacion de muchos datos a un empleados. 
-    public function employee()
-    {
-        return $this->belongsTo(Employee::class, 'employee_id');
     }
 
     // relacion de muchos datos a una medicina. 
