@@ -6,7 +6,7 @@ export const Login = () => {
       <h2 className="text-center">inicia seccion aquí </h2>
       <form className="container">
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Correo electronico
           </label>
           <input
@@ -17,7 +17,7 @@ export const Login = () => {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Contraseña
           </label>
           <input

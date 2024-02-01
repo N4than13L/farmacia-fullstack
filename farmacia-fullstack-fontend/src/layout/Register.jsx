@@ -1,6 +1,5 @@
 import React from "react";
 import { Global } from "../helpers/Global";
-import { UseForm } from "../hooks/UseForm";
 
 import { useState } from "react";
 export const Register = () => {
@@ -10,22 +9,11 @@ export const Register = () => {
     // prevenir que se recargue la pagina
     e.preventDefault();
 
-    // datos de los hooks
-
     // recoger los datos del formulario.
     let nombre = document.getElementById("nombre").value;
     let apellido = document.getElementById("apellido").value;
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
-
-    // var newUser = {
-    //   json: [
-    //     { name: nombre },
-    //     { surname: apellido },
-    //     { email: email },
-    //     { password: password },
-    //   ],
-    // };
 
     let newUser = {
       name: nombre,
@@ -34,11 +22,9 @@ export const Register = () => {
       password: password,
     };
 
-    console.log(newUser);
-
     const request = await fetch(Global.url + "register", {
       method: "POST",
-      body: newUser,
+      body: JSON.stringify(newUser),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -75,45 +61,53 @@ export const Register = () => {
         {/* alerta si si envio el usuario */}
 
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Nombre
           </label>
           <input
             type="text"
             className="form-control"
+            name="name"
             id="nombre"
             aria-describedby="emailHelp"
           />
         </div>
 
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Apellido
           </label>
           <input
             type="text"
             className="form-control"
             id="apellido"
+            name="surname"
             aria-describedby="emailHelp"
           />
         </div>
 
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Correo electronico
           </label>
           <input
             type="email"
             className="form-control"
             id="email"
+            name="email"
             aria-describedby="emailHelp"
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Contraseña
           </label>
-          <input type="password" className="form-control" id="password" />
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            name="password"
+          />
         </div>
 
         <section className="text-center">

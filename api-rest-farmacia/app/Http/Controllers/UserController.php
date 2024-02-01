@@ -17,74 +17,46 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        // recoger datos del usuario por post
-        $json = $request->input('json', null);
-        $params = json_decode($json);
-        $params_array = json_decode($json, true);
+        // recoger datos de entrada del usuario
+        $name = $request->input("name");
+        $surname = $request->input("surname");
+        $email = $request->input("email");
+        $password = $request->input("password");
 
-        // validar datos por post
-        $validate = Validator::make($params_array, [
-            'name' => 'required|alpha',
-            'surname' => 'required|alpha',
-            'email' => 'required|email|unique:user', //  comprobar si el usuario existe (duplicado).
-            'password' => 'required',
-        ]);
+        if (!empty($name) && !empty($surname) && !empty($email) && !empty($password)) {
+            // cifrar la contrasena
+            $pwd = hash("sha256", $password);
 
-        // solo para rellenar de forma automatica 'role' => 'employer'
+            // crear el usuario
+            $user = new User();
 
-        if (!empty($params)) {
-            // limpiar datos.
-            $params_array = array_map("trim", $params_array);
+            $user->name = $name;
+            $user->surname = $surname;
+            $user->email = $email;
+            $user->password = $pwd;
+            $user->role = "User";
 
-            if ($validate->fails()) {
-                $data  = array(
-                    "status" => "error",
-                    "code" => 400,
-                    "message" => "Error al registrar, favor inserte correctamente",
-                    "errors" => $validate->errors()
-                );
+            // guardar usuario
+            $user->save();
 
-                return response()->json($data,  $data['code']);
-            } else {
-                $data  = array(
-                    "status" => "success",
-                    "code" => 200,
-                    "message" => "Usuario guardado con exito",
-                );
-
-                // cifrar la contrasena
-                $pwd = hash("sha256", $params->password);
-
-                // crear el usuario
-                $user = new User();
-                $user->name = $params_array['name'];
-                $user->surname = $params_array['surname'];
-                $user->email = $params_array['email'];
-                $user->password = $pwd;
-                $user->role = "User";
-
-                // guardar usuario
-                $user->save();
-
-                // devolver respuesta
-                $data  = array(
-                    "status" => "success",
-                    "code" => 200,
-                    "message" => "Usuario guardado con exito",
-                    "user" => $user
-                );
-
-
-                // devolver respuesta. 
-                return response()->json($data,  $data['code']);
-            }
+            // devolver respuesta
+            $data  = array(
+                "status" => "success",
+                "code" => 200,
+                "message" => "Usuario guardado con exito",
+                "user" => $user
+            );
         } else {
+            //  devolver respuesta
             $data  = array(
                 "status" => "error",
                 "code" => 400,
-                "message" => "Error al registrar datos del usuario",
+                "message" => "Lo siento no se pudo registrar el usuario",
             );
         }
+
+
+        // devolver respuesta. 
 
         return response()->json($data,  $data['code']);
     }

@@ -3,41 +3,76 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-info">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          Farmacia los medicamentos
-        </Link>
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          Navbar
+        </a>
         <button
-          className="navbar-toggler"
+          class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
         </button>
-        <Link to="/" className="nav-link active" aria-current="page">
-          Home
-        </Link>
-        <div className="collapse navbar-collapse" id="navbarNav"></div>
-        <section class="d-flex" role="search">
-          <ul className="navbar-nav">
-            <li className="nav-item"></li>
-            <li className="nav-item">
-              <Link to="/register" className="nav-link">
-                Registro
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <Link to="/" className="nav-link active" aria-current="page">
+                Home
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#">
+                    Action
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    Another action
+                  </a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    Something else here
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
             </li>
           </ul>
-        </section>
+          <section class="d-flex" role="search">
+            <Link to="/register" className="nav-link">
+              Registro
+            </Link>
+            &nbsp;&nbsp;&nbsp;
+          </section>
+          <section class="d-flex" role="search">
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
+          </section>
+        </div>
       </div>
     </nav>
   );
