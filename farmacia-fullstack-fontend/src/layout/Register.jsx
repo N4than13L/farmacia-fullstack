@@ -26,7 +26,6 @@ export const Register = () => {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
       },
     });
@@ -45,14 +44,34 @@ export const Register = () => {
       <h2 className="text-center">Registrate aquí </h2>
       <div className="mb-3">
         {saved == "saved" ? (
-          <strong className="alert alert-success">
-            Usuario guardado exitosamente
-          </strong>
+          <div
+            class="alert alert-success alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Usuario Guardado correctamente </strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
         ) : (
           ""
         )}
         {saved == "error" ? (
-          <strong className="alert alert-danger">Error al registrar</strong>
+          <div
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Error al registrar </strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
         ) : (
           ""
         )}

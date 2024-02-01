@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg bg-info">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          Navbar
-        </a>
+        <Link to="/" className="nav-link active" aria-current="page">
+          <h6>Farmacia Los Mameyes</h6>
+        </Link>
         <button
           class="navbar-toggler"
           type="button"
