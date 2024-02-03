@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sec_effect;
 use App\Helpers\JwtAuth;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class EffectController extends Controller
 {
@@ -34,24 +34,17 @@ class EffectController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $name = $request->input("name");
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($name)) {
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
 
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                'user_id' => 'required' . $user->sub
-            ]);
-
             // guardar cliente
             $sec_effects = new Sec_effect();
-            $sec_effects->name = $params_array['name'];
+            $sec_effects->name = $name;
             $sec_effects->user_id = $user->sub;
 
             $sec_effects->save();
@@ -86,27 +79,27 @@ class EffectController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $name = $request->input("name");
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($name)) {
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
 
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                'user_id' => 'required' . $user->sub
-            ]);
 
             // guardar cliente
             $sec_effects = Sec_effect::find($id);
-            $sec_effects->name = $params_array['name'];
+            $sec_effects->name = $name;
             $sec_effects->user_id = $user->sub;
 
-            $sec_effects->update();
+            $old = Sec_effect::find($id);
+
+            DB::table('sec_effects')
+                ->where('id', $id)
+                ->update([
+                    'name' => $name,
+                ]);
 
             $data = array(
                 "status" => "success",
@@ -114,6 +107,8 @@ class EffectController extends Controller
                 "message" => "effectos guardado con exito",
                 "user" => $user->name . " " . $user->surname,
                 "secondary_effects" => $sec_effects,
+                "old" => $old
+
             );
         } else {
             $data = array(

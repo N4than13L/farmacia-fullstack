@@ -52,6 +52,9 @@ Route::get('/api/seceffects/index', [EffectController::class, 'index'])->middlew
 // guardar
 Route::post('/api/seceffects/save', [EffectController::class, 'save'])->middleware(ApiAuthMiddleware::class);
 
+// actualizar 
+Route::post('/api/seceffects/update/{id}', [EffectController::class, 'update'])->middleware(ApiAuthMiddleware::class);
+
 // sacar uno
 Route::get('/api/seceffects/detail/{id}', [EffectController::class, 'detail'])->middleware(ApiAuthMiddleware::class);
 
