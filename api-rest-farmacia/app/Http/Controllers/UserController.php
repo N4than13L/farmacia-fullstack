@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -66,33 +67,26 @@ class UserController extends Controller
         $jwtAuth = new JwtAuth();
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params = json_decode($json);
-        $params_array = json_decode($json, true);
+        $email = $request->input("email");
+        $password = $request->input("password");
 
-        // Validar esos datos.
-        $validate = Validator::make($params_array, [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
 
-        if ($validate->fails()) {
+        if (empty($email) && empty($password)) {
             // Error al enviar los datos 
             $signup = array(
                 'status' => 'error',
                 'code' => 404,
                 'message' => 'Usuario no ha podido hacer el login',
-                'errors' => $validate->errors()
             );
         } else {
             // Cifrar la contrasena.
-            $pwd = $params->password;
+            $pwd = $password;
 
             // Devolver los datos del token.
-            $signup = $jwtAuth->signup($params->email, $pwd);
+            $signup = $jwtAuth->signup($email, $pwd);
 
-            if (!empty($params->gettoken)) {
-                $signup = $jwtAuth->signup($params->email, $pwd, true);
+            if (!empty($pwd->gettoken)) {
+                $signup = $jwtAuth->signup($email, $pwd, true);
             }
         }
 
@@ -109,32 +103,38 @@ class UserController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        // $json = $request->input('json', null);
+        // $params_array = json_decode($json, true);
 
-        if ($checkToken && !empty($params_array)) {
+        $name = $request->input("name");
+        $surname = $request->input("surname");
+        $email = $request->input("email");
+        // $password = $request->input("password");
+
+
+
+        if ($checkToken && !empty($name) || !empty($surname) || !empty($email)) {
 
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
-
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                'surname' => 'required|alpha',
-                'email' => 'required|email|unique:user,' . $user->sub
-            ]);
+            $user_changes = User::find($user->sub);
 
             // quitar campos que no se nesecitan.
-            unset($params_array['id']);
-            unset($params_array['role']);
-            unset($params_array['password']);
-            unset($params_array['created_at']);
-            unset($params_array['remember_token']);
+            unset($user->role);
+            unset($user->password);
+            unset($user->created_at);
+            unset($user->remember_token);
 
             // actualizar datos de usuario
-            $user_update = User::where('id', $user->sub)->update($params_array);
+            DB::table('user')
+                ->where('id', $user->sub)
+                ->update([
+                    'name' => $name,
+                    'surname' => $surname,
+                    'email' => $email,
+                ]);
 
             // devolver array con el resultado
             $data = array(
@@ -142,7 +142,7 @@ class UserController extends Controller
                 "code" => 200,
                 "message" => "datos actualizados con exito",
                 "user" => $user,
-                "changes" => $params_array
+                'changes' => $user_changes
             );
         } else {
             $data = array(
@@ -163,7 +163,7 @@ class UserController extends Controller
             $data = array(
                 "status" => "success",
                 "code" => 200,
-                $user
+                "user" => $user
             );
         } else {
             $data = array(
