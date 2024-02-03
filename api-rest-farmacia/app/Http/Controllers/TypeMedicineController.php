@@ -30,28 +30,24 @@ class TypeMedicineController extends Controller
         $token = $request->header("Authorization");
         $jwtAuth = new JwtAuth();
 
+        $name = $request->input("name");
+
         // sacar datos del usuario identificado via token
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        // $json = $request->input('json', null);
+        // $params_array = json_decode($json, true);
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($name)) {
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
 
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                'user_id' => 'required' . $user->sub
-            ]);
-
             // guardar cliente
             $type_medicine = new Type_medicine();
-            $type_medicine->name = $params_array['name'];
+            $type_medicine->name = $name;
             $type_medicine->user_id = $user->sub;
 
             $type_medicine->save();
@@ -86,25 +82,21 @@ class TypeMedicineController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $name = $request->input("name");
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($name)) {
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
 
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                'user_id' => 'required' . $user->sub
-            ]);
-
             // guardar cliente
             $type_medicine = Type_medicine::find($id);
-            $type_medicine->name = $params_array['name'];
+            $type_medicine->name = $name;
             $type_medicine->user_id = $user->sub;
+
+            $old = Type_medicine::find($id);
+
 
             $type_medicine->update();
 
@@ -113,7 +105,8 @@ class TypeMedicineController extends Controller
                 "code" => 200,
                 "message" => "effectos guardado con exito",
                 "user" => $user->name . " " . $user->surname,
-                "secondary_effects" => $type_medicine,
+                "changes" => $type_medicine,
+                "old" => $old
             );
         } else {
             $data = array(
