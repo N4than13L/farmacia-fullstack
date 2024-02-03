@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\User;
 use App\Helpers\JwtAuth;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -74,28 +74,21 @@ class ClientController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $fullname = $request->input("fullname");
+        $address = $request->input("address");
+        $phone = $request->input("phone");
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($fullname) || !empty($address) || !empty($phone)) {
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
 
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'fullname' => 'required|alpha',
-                'address' => 'required|alpha',
-                'phone' => 'required|alpha',
-                'user_id' => 'required' . $user->sub
-            ]);
-
             // guardar cliente
             $client = new Client();
-            $client->fullname = $params_array['fullname'];
-            $client->address = $params_array['address'];
-            $client->phone = $params_array['phone'];
+            $client->fullname = $fullname;
+            $client->address = $address;
+            $client->phone = $phone;
             $client->user_id = $user->sub;
 
             $client->save();
@@ -129,10 +122,11 @@ class ClientController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $fullname = $request->input("fullname");
+        $address = $request->input("address");
+        $phone = $request->input("phone");
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($fullname) || !empty($address) || !empty($phone)) {
 
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
@@ -140,17 +134,16 @@ class ClientController extends Controller
             $user = $jwtAuth->checkToken($token, true);
 
             $client = Client::find($id);
-
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'fullname' => 'required|alpha',
-                'address' => 'required|alpha',
-                'phone' => 'required|alpha',
-                'user_id' => 'required' . $user->sub
-            ]);
+            $old = Client::find($id);
 
             // actualizar datos de usuario
-            $client_update = Client::where('id', $id)->update($params_array);
+            DB::table('clients')
+                ->where('id', $id)
+                ->update([
+                    'fullname' => $fullname,
+                    'address' => $address,
+                    'phone' => $phone,
+                ]);
 
             // devolver array con el resultado
             $data = array(
@@ -158,7 +151,7 @@ class ClientController extends Controller
                 "code" => 200,
                 "message" => "datos actualizados con exito",
                 "client" => $client,
-                "changes" => $params_array,
+                "old" => $old,
                 "user" => $user
             );
         } else {

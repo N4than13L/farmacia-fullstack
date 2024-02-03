@@ -41,7 +41,7 @@ Route::get('/api/clients', [ClientController::class, 'index'])->middleware(ApiAu
 
 Route::get('/api/clients/{id}', [ClientController::class, 'show'])->middleware(ApiAuthMiddleware::class);
 
-Route::post('/api/clients/agregar', [ClientController::class, 'save'])->middleware(ApiAuthMiddleware::class);
+Route::post('/api/clients/save', [ClientController::class, 'save'])->middleware(ApiAuthMiddleware::class);
 
 Route::post('/api/clients/update/{id}', [ClientController::class, 'update'])->middleware(ApiAuthMiddleware::class);
 
