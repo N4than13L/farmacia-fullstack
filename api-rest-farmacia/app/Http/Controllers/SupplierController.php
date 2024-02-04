@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use App\Helpers\JwtAuth;
-use Illuminate\Support\Facades\Validator;
-
 
 class SupplierController extends Controller
 {
@@ -35,32 +33,25 @@ class SupplierController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $name = $request->input("name");
+        $address = $request->input("address");
+        $phone = $request->input("phone");
+        $email = $request->input("email");
+        $rnc = $request->input("rnc");
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($name) && !empty($address) && !empty($phone) && !empty($email) && !empty($rnc)) {
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
 
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                "address" => "required|alpha",
-                "phone" => "required|alpha",
-                "email" => "required|email",
-                "rnc" => "required|alpha",
-                'user_id' => 'required' . $user->sub
-            ]);
-
             // guardar cliente
             $supplier = new Supplier();
-            $supplier->name = $params_array['name'];
-            $supplier->address = $params_array['address'];
-            $supplier->phone = $params_array['phone'];
-            $supplier->email = $params_array['email'];
-            $supplier->rnc = $params_array['rnc'];
+            $supplier->name = $name;
+            $supplier->address = $address;
+            $supplier->phone = $phone;
+            $supplier->email = $email;
+            $supplier->rnc = $rnc;
             $supplier->user_id = $user->sub;
 
             $supplier->save();
@@ -68,7 +59,7 @@ class SupplierController extends Controller
             $data = array(
                 "status" => "success",
                 "code" => 200,
-                "message" => "effectos guardado con exito",
+                "message" => "Suplidor agregado con exito",
                 "user" => $user->name . " " . $user->surname,
                 "suplier" => $supplier,
             );
@@ -95,36 +86,32 @@ class SupplierController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $name = $request->input("name");
+        $address = $request->input("address");
+        $phone = $request->input("phone");
+        $email = $request->input("email");
+        $rnc = $request->input("rnc");
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($name) && !empty($address) && !empty($phone) && !empty($email) && !empty($rnc)) {
+
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
-
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                "address" => "required|alpha",
-                "phone" => "required|alpha",
-                "email" => "required|email",
-                "rnc" => "required|alpha",
-                'user_id' => 'required' . $user->sub
-            ]);
 
             // guardar cliente
             $supplier = Supplier::find($id);
 
             // guardar cliente
             $supplier = new Supplier();
-            $supplier->name = $params_array['name'];
-            $supplier->address = $params_array['address'];
-            $supplier->phone = $params_array['phone'];
-            $supplier->email = $params_array['email'];
-            $supplier->rnc = $params_array['rnc'];
+            $supplier->name = $name;
+            $supplier->address = $address;
+            $supplier->phone = $phone;
+            $supplier->email = $email;
+            $supplier->rnc = $rnc;
             $supplier->user_id = $user->sub;
+
+            $old = Supplier::find($id);
 
             $supplier->update();
 
@@ -134,9 +121,10 @@ class SupplierController extends Controller
             $data = array(
                 "status" => "success",
                 "code" => 200,
-                "message" => "effectos guardado con exito",
+                "message" => "suplidor actualizado con exito",
                 "user" => $user->name . " " . $user->surname,
                 "suplier" => $supplier,
+                "old" => $old
             );
         } else {
             $data = array(

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Type_medicine;
 use App\Helpers\JwtAuth;
-use Illuminate\Support\Facades\Validator;
 
 class TypeMedicineController extends Controller
 {
