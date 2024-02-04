@@ -1,8 +1,8 @@
 import React from "react";
 import { Global } from "../helpers/Global";
 import { Link } from "react-router-dom";
-
 import { useState } from "react";
+
 export const Register = () => {
   const [saved, setSaved] = useState("error");
 
@@ -75,7 +75,7 @@ export const Register = () => {
           </div>
         )}
       </div>
-      <form className="container" onSubmit={RegisterUser}>
+      <form className="container mb-3" onSubmit={RegisterUser}>
         {/* alerta si si envio el usuario */}
 
         <div className="mb-3">
@@ -129,11 +129,14 @@ export const Register = () => {
         </div>
 
         <section className="text-center">
-          <input
-            type="submit"
-            value="Registrarte"
-            className="btn btn-success"
-          />
+          <button className="btn btn-success">
+            <i class="fa-solid fa-address-card"></i>
+            <input
+              type="submit"
+              value="Registrarte"
+              className="btn btn-success"
+            />
+          </button>
         </section>
       </form>
     </>

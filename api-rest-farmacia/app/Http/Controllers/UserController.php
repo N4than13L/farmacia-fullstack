@@ -69,7 +69,6 @@ class UserController extends Controller
         $email = $request->input("email");
         $password = $request->input("password");
 
-
         if (empty($email) && empty($password)) {
             // Error al enviar los datos 
             $signup = array(
