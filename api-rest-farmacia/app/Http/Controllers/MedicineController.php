@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\JwtAuth;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Medicine;
 
 class MedicineController extends Controller
@@ -25,7 +24,6 @@ class MedicineController extends Controller
 
     public function save(Request $request)
     {
-        // recoger datos por post 
         // recoger token por la cabezera
         $token = $request->header("Authorization");
         $jwtAuth = new JwtAuth();
@@ -34,32 +32,23 @@ class MedicineController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $name = $request->input("name");
+        $type_medicine_id = $request->input("type_medicine_id");
+        $sec_effects_id = $request->input("sec_effects_id");
+        $supplier_id = $request->input("supplier_id");
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($name) && !empty($type_medicine_id) &&  !empty($sec_effects_id) && !empty($supplier_id)) {
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
-
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                'user_id' => 'required' . $user->sub,
-                'type_medicine_id' => "required",
-                "sec_effects_id" => "required",
-                "supplier_id" => "required"
-
-            ]);
-
             // guardar cliente
             $medicine = new Medicine();
-            $medicine->name = $params_array['name'];
+            $medicine->name =  $name;
             $medicine->user_id = $user->sub;
-            $medicine->type_medicine_id = $params_array['type_medicine_id'];
-            $medicine->sec_effects_id = $params_array['sec_effects_id'];
-            $medicine->supplier_id = $params_array['supplier_id'];
+            $medicine->type_medicine_id = $type_medicine_id;
+            $medicine->sec_effects_id = $sec_effects_id;
+            $medicine->supplier_id = $supplier_id;
 
             $medicine->save();
 
@@ -93,28 +82,27 @@ class MedicineController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $name = $request->input("name");
+        $type_medicine_id = $request->input("type_medicine_id");
+        $sec_effects_id = $request->input("sec_effects_id");
+        $supplier_id = $request->input("supplier_id");
 
-        if ($checkToken && !empty($params_array)) {
+
+        if ($checkToken && !empty($name) && !empty($type_medicine_id) &&  !empty($sec_effects_id) && !empty($supplier_id)) {
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
 
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                'user_id' => 'required' . $user->sub
-            ]);
-
             // guardar cliente
             $medicine = Medicine::find($id);
-            $medicine->name = $params_array['name'];
+            $medicine->name =  $name;
             $medicine->user_id = $user->sub;
-            $medicine->type_medicine_id = $params_array['type_medicine_id'];
-            $medicine->sec_effects_id = $params_array['sec_effects_id'];
-            $medicine->supplier_id = $params_array['supplier_id'];
+            $medicine->type_medicine_id = $type_medicine_id;
+            $medicine->sec_effects_id = $sec_effects_id;
+            $medicine->supplier_id = $supplier_id;
+
+            $old = Medicine::find($id);
 
             $medicine->update();
 
@@ -124,6 +112,7 @@ class MedicineController extends Controller
                 "message" => "medicamento actualizado con exito",
                 "user" => $user->name . " " . $user->surname,
                 "medicine" => $medicine,
+                "old" => $old
             );
         } else {
             $data = array(
@@ -136,7 +125,6 @@ class MedicineController extends Controller
         // devolver resultado
         return response()->json($data, $data['code']);
     }
-
 
     public function detail(Request $request, $id)
     {
@@ -160,7 +148,6 @@ class MedicineController extends Controller
 
     public function delete(Request $request, $id)
     {
-
         $token = $request->header("Authorization");
         $jwtAuth = new JwtAuth();
         $user = $jwtAuth->checkToken($token, true);
