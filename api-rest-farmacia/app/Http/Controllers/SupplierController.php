@@ -113,10 +113,8 @@ class SupplierController extends Controller
 
             $old = Supplier::find($id);
 
-            $supplier->update();
-
             // actualizar datos de usuario
-            // $supplier_up = Supplier::where('id', $user->sub)->update($params_array);
+            $supplier->update();
 
             $data = array(
                 "status" => "success",

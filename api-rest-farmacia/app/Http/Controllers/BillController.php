@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\JwtAuth;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Bill;
 
 class BillController extends Controller
@@ -35,37 +34,30 @@ class BillController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $personal = $request->input("personal");
+        $medicine_id = $request->input("medicine_id");
+        $amount = $request->input("amount");
+        $clients_id = $request->input("clients_id");
 
-        if ($checkToken && !empty($params_array)) {
-            // recoger datos por post.
+        if ($checkToken && !empty($personal) && !empty($medicine_id) && !empty($amount) && !empty($clients_id)) {
+
+            // verificar datos por cabezera.
             $jwtAuth = new JwtAuth();
-
             $user = $jwtAuth->checkToken($token, true);
-
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                'user_id' => 'required' . $user->sub,
-                'medicine_id' => "required",
-                'amount' => 'required',
-                "clients_id" => "required"
-
-            ]);
 
             // guardar cliente
             $bill = new Bill();
-            $bill->amount = $params_array['amount'];
+            $bill->personal = $personal;
+            $bill->amount = $amount;
+            $bill->medicine_id = $medicine_id;
+            $bill->clients_id = $clients_id;
             $bill->user_id = $user->sub;
-            $bill->medicine_id = $params_array['medicine_id'];
-            $bill->clients_id = $params_array['clients_id'];
             $bill->save();
 
             $data = array(
                 "status" => "success",
                 "code" => 200,
-                "message" => "medicamento guardado con exito",
+                "message" => "factura guardada con exito",
                 "user" => $user->name . " " . $user->surname,
                 "bill" => $bill,
             );
@@ -92,41 +84,35 @@ class BillController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        $json = $request->input('json', null);
-        $params_array = json_decode($json, true);
+        $personal = $request->input("personal");
+        $medicine_id = $request->input("medicine_id");
+        $amount = $request->input("amount");
+        $clients_id = $request->input("clients_id");
 
-        if ($checkToken && !empty($params_array)) {
+        if ($checkToken && !empty($personal) && !empty($medicine_id) && !empty($amount) && !empty($clients_id)) {
             // recoger datos por post.
             $jwtAuth = new JwtAuth();
 
             $user = $jwtAuth->checkToken($token, true);
 
-
-            // validar datos.
-            $validate = Validator::make($params_array, [
-                'name' => 'required|alpha',
-                'user_id' => 'required' . $user->sub,
-                'medicine_id' => "required",
-                'amount' => 'required',
-                "clients_id" => "required"
-
-            ]);
-
             // guardar factura
             $bill = new Bill();
-            $bill->amount = $params_array['amount'];
+            $bill->personal = $personal;
+            $bill->amount = $amount;
+            $bill->medicine_id = $medicine_id;
+            $bill->clients_id = $clients_id;
             $bill->user_id = $user->sub;
-            $bill->medicine_id = $params_array['medicine_id'];
-            $bill->clients_id = $params_array['clients_id'];
+            $old = Bill::find($id);
 
-            $bill->save();
+            $bill->update();
 
             $data = array(
                 "status" => "success",
                 "code" => 200,
-                "message" => "medicamento actualizado con exito",
+                "message" => "factura actualizada con exito",
                 "user" => $user->name . " " . $user->surname,
                 "bill" => $bill,
+                "old" => $old
             );
         } else {
             $data = array(
@@ -163,7 +149,6 @@ class BillController extends Controller
 
     public function delete(Request $request, $id)
     {
-
         $token = $request->header("Authorization");
         $jwtAuth = new JwtAuth();
         $user = $jwtAuth->checkToken($token, true);

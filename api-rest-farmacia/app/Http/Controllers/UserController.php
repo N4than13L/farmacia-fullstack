@@ -102,15 +102,10 @@ class UserController extends Controller
         $checkToken = $jwtAuth->checkToken($token);
 
         // Recibir los datos por POST.
-        // $json = $request->input('json', null);
-        // $params_array = json_decode($json, true);
-
         $name = $request->input("name");
         $surname = $request->input("surname");
         $email = $request->input("email");
         // $password = $request->input("password");
-
-
 
         if ($checkToken && !empty($name) || !empty($surname) || !empty($email)) {
 

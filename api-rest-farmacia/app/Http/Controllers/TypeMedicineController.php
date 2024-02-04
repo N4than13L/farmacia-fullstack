@@ -54,7 +54,7 @@ class TypeMedicineController extends Controller
             $data = array(
                 "status" => "success",
                 "code" => 200,
-                "message" => "effectos guardado con exito",
+                "message" => "tipo de medicina guardada con exito",
                 "user" => $user->name . " " . $user->surname,
                 "secondary_effects" => $type_medicine,
             );
@@ -62,7 +62,7 @@ class TypeMedicineController extends Controller
             $data = array(
                 "status" => "error",
                 "code" => 400,
-                "message" => "Llena los datos correspondientes"
+                "message" => "Porfavor llena los datos correspondientes"
             );
         }
 
@@ -72,7 +72,6 @@ class TypeMedicineController extends Controller
 
     public function update(Request $request, $id)
     {
-        // recoger datos por post 
         // recoger token por la cabezera
         $token = $request->header("Authorization");
         $jwtAuth = new JwtAuth();
@@ -96,13 +95,12 @@ class TypeMedicineController extends Controller
 
             $old = Type_medicine::find($id);
 
-
             $type_medicine->update();
 
             $data = array(
                 "status" => "success",
                 "code" => 200,
-                "message" => "effectos guardado con exito",
+                "message" => "tipo de medicina actualizada con exito",
                 "user" => $user->name . " " . $user->surname,
                 "changes" => $type_medicine,
                 "old" => $old

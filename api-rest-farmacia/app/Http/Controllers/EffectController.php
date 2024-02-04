@@ -87,7 +87,6 @@ class EffectController extends Controller
 
             $user = $jwtAuth->checkToken($token, true);
 
-
             // guardar cliente
             $sec_effects = Sec_effect::find($id);
             $sec_effects->name = $name;

@@ -15,7 +15,7 @@ class Bill extends Model
 
     protected $fillable = [
         "id",
-        "date",
+        "personal",
         "user_id",
         "employee_id",
         "mediccine_id",
