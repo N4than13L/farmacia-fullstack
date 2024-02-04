@@ -31,6 +31,15 @@ export const Login = () => {
     console.log(data);
     if (data.status == "success") {
       setSaved("saved");
+      // persistir datos en el navegador en el navegador.
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // redireciion.
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     } else {
       setSaved("error");
     }

@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
-    <nav class="navbar navbar-expand-lg bg-info">
+    <nav
+      class="navbar navbar-expand-lg"
+      style={{ backgroundColor: "rgb(77, 130, 214)" }}
+    >
       <div class="container-fluid">
         <Link to="/" className="nav-link active" aria-current="page">
           Farmacia Los Mameyes
