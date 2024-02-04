@@ -6,7 +6,7 @@ export const Navbar = () => {
     <nav class="navbar navbar-expand-lg bg-info">
       <div class="container-fluid">
         <Link to="/" className="nav-link active" aria-current="page">
-          <h6>Farmacia Los Mameyes</h6>
+          Farmacia Los Mameyes
         </Link>
         <button
           class="navbar-toggler"
@@ -23,7 +23,7 @@ export const Navbar = () => {
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <Link to="/" className="nav-link active" aria-current="page">
-                Home
+                <i class="fa-solid fa-house"></i> Home
               </Link>
             </li>
             <li class="nav-item dropdown">
@@ -63,13 +63,13 @@ export const Navbar = () => {
           </ul>
           <section class="d-flex" role="search">
             <Link to="/register" className="nav-link">
-              Registro
+              <i class="fa-solid fa-address-card"></i> Registro
             </Link>
             &nbsp;&nbsp;&nbsp;
           </section>
           <section class="d-flex" role="search">
             <Link to="/login" className="nav-link">
-              Login
+              <i class="fa-solid fa-right-to-bracket"></i> Login
             </Link>
           </section>
         </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Global } from "../helpers/Global";
+import { Link } from "react-router-dom";
 
 import { useState } from "react";
 export const Register = () => {
@@ -45,10 +46,13 @@ export const Register = () => {
       <div className="mb-3">
         {saved == "saved" ? (
           <div
-            class="alert alert-success alert-dismissible fade show"
+            class="alert alert-success alert-dismissible fade show container"
             role="alert"
           >
-            <strong>Usuario Guardado correctamente </strong>
+            Usuario registrado con exito Inicie sesion
+            <Link className="btn btn-primary" to="/login">
+              &nbsp; aquí
+            </Link>
             <button
               type="button"
               class="btn-close"
@@ -57,14 +61,11 @@ export const Register = () => {
             ></button>
           </div>
         ) : (
-          ""
-        )}
-        {saved == "error" ? (
           <div
-            class="alert alert-danger alert-dismissible fade show"
+            class="alert alert-danger alert-dismissible fade show container"
             role="alert"
           >
-            <strong>Error al registrar </strong>
+            Error al guardar el usuario Favor inserte datos correctamente
             <button
               type="button"
               class="btn-close"
@@ -72,8 +73,6 @@ export const Register = () => {
               aria-label="Close"
             ></button>
           </div>
-        ) : (
-          ""
         )}
       </div>
       <form className="container" onSubmit={RegisterUser}>
