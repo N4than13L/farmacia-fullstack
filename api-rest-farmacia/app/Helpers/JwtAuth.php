@@ -35,8 +35,6 @@ class JwtAuth
                 'email' => $user->email,
                 'name' => $user->name,
                 'surname' => $user->surname,
-                "description" => $user->description,
-                "image" => $user->image,
                 'iat' => time(),
                 'exp' => time() + (7 * 24 * 60 * 60)
             );
@@ -46,9 +44,18 @@ class JwtAuth
             $decoded = JWT::decode($jwt, $this->key, ['HS256']);
 
             if (is_null($getToken)) {
-                $data = $jwt;
+                $data = array(
+                    "status" => "success",
+                    "code" => 200,
+                    "token" => $jwt,
+                    "user" => $user
+                );
             } else {
-                $data = $decoded;
+                $data = array(
+                    "status" => "success",
+                    "code" => 200,
+                    "token" => $decoded
+                );
             }
         } else {
             $data = array(

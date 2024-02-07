@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export const Register = () => {
-  const [saved, setSaved] = useState("error");
+  const [saved, setSaved] = useState("");
 
   const RegisterUser = async (e) => {
     // prevenir que se recargue la pagina

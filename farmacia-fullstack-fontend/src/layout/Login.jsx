@@ -1,10 +1,9 @@
 import React from "react";
 import { Global } from "../helpers/Global";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export const Login = () => {
-  const [saved, setSaved] = useState("error");
+  const [saved, setSaved] = useState("");
 
   const Login = async (e) => {
     // prevenir que se recargue la pagina
@@ -28,18 +27,18 @@ export const Login = () => {
     });
 
     const data = await request.json();
+
     console.log(data);
+
     if (data.status == "success") {
       setSaved("saved");
       // persistir datos en el navegador en el navegador.
-
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // redireciion.
       setTimeout(() => {
-        window.location.reload();
-      }, 100);
+        window.location.href = "/";
+      }, 750);
     } else {
       setSaved("error");
     }
@@ -49,17 +48,14 @@ export const Login = () => {
     <>
       <h2 className="text-center">inicia seccion aquí </h2>
 
-      <form className="container " onSubmit={Login}>
+      <form className="container" onSubmit={Login}>
         <div className="mb-3">
           {saved == "saved" ? (
             <div
               class="alert alert-success alert-dismissible fade show container"
               role="alert"
             >
-              Usuario registrado con exito Inicie sesion
-              <Link className="btn btn-primary" to="/login">
-                &nbsp; aquí
-              </Link>
+              Login exitoso Iniciando sesion &nbsp;
               <button
                 type="button"
                 class="btn-close"
@@ -72,7 +68,7 @@ export const Login = () => {
               class="alert alert-danger alert-dismissible fade show container"
               role="alert"
             >
-              Error al hacer login favor inserte datos correctamente
+              Error al hacer login favor inserte los datos correctamente
               <button
                 type="button"
                 class="btn-close"
