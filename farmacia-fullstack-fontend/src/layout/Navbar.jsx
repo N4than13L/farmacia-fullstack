@@ -32,7 +32,7 @@ export const Navbar = () => {
     >
       <div class="container-fluid">
         <Link to="/" className="nav-link active" aria-current="page">
-          <strong>Farmacia Los Mameyes</strong>
+          <h3>Farmacia Los Mameyes</h3>
         </Link>
         <button
           className="navbar-toggler"
@@ -48,7 +48,7 @@ export const Navbar = () => {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           {!!setPerfil && usuario != null ? (
             <>
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <ul class="navbar-nav me-auto mb-lg-0">
                 <li class="nav-item">
                   <Link to="/" className="nav-link active" aria-current="page">
                     <i class="fa-solid fa-house"></i>&nbsp;Inicio
@@ -105,7 +105,7 @@ export const Navbar = () => {
                   >
                     {!!setPerfil && usuario != null ? (
                       <p>
-                        <i class="fa-solid fa-user"></i>&nbsp;{usuario.name}{" "}
+                        <i class="fa-solid fa-user"></i>&nbsp;{usuario.name}
                         {usuario.surname}
                       </p>
                     ) : (
@@ -137,13 +137,13 @@ export const Navbar = () => {
             </>
           ) : (
             <>
-              <section class="d-flex m-2" role="search">
+              <section class="d-flex" role="search">
                 <Link to="/register" className="nav-link">
                   <i class="fa-solid fa-address-card"></i>Registro
                 </Link>
                 &nbsp;&nbsp;&nbsp;
               </section>
-              <section class="d-flex m-2" role="search">
+              <section class="d-flex" role="search">
                 <Link to="/login" className="nav-link">
                   <i class="fa-solid fa-right-to-bracket"></i>Login
                 </Link>
