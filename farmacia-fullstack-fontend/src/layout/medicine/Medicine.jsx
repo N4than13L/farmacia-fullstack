@@ -1,9 +1,9 @@
 import React from "react";
 
-export const HomePage = () => {
+export const Medicine = () => {
   return (
     <div className="container bg-body mt-3 rounded-3">
-      <h1 className="text-center mb-2">Bienvenidos a farmacia los Mameyes</h1>
+      <h1 className="text-center">Medicamentos</h1>
     </div>
   );
 };

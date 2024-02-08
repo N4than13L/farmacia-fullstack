@@ -56,19 +56,41 @@ export const Navbar = () => {
                 </li>
 
                 <li class="nav-item">
-                  <Link to="/" className="nav-link active" aria-current="page">
+                  <Link
+                    to="/client"
+                    className="nav-link active"
+                    aria-current="page"
+                  >
                     <i class="fa-brands fa-intercom"></i>&nbsp;clientes
                   </Link>
                 </li>
 
                 <li class="nav-item">
-                  <Link to="/" className="nav-link active" aria-current="page">
+                  <Link
+                    to="/bill"
+                    className="nav-link active"
+                    aria-current="page"
+                  >
                     <i class="fa-solid fa-file-invoice"></i>&nbsp;factura
                   </Link>
                 </li>
 
                 <li class="nav-item">
-                  <Link to="/" className="nav-link active" aria-current="page">
+                  <Link
+                    to="/suplier"
+                    className="nav-link active"
+                    aria-current="page"
+                  >
+                    <i class="fa-solid fa-truck-field"></i>&nbsp;Suplidores
+                  </Link>
+                </li>
+
+                <li class="nav-item">
+                  <Link
+                    to="/medicine"
+                    className="nav-link active"
+                    aria-current="page"
+                  >
                     <i class="fa-solid fa-syringe"></i>&nbsp;medicamentos
                   </Link>
                 </li>

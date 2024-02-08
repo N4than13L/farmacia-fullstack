@@ -1,9 +1,9 @@
 import React from "react";
 
-export const HomePage = () => {
+export const TypeMedicine = () => {
   return (
     <div className="container bg-body mt-3 rounded-3">
-      <h1 className="text-center mb-2">Bienvenidos a farmacia los Mameyes</h1>
+      <h1 className="text-center">Tipo de medicinas</h1>
     </div>
   );
 };
