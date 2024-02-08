@@ -75,9 +75,12 @@ export const Register = () => {
           </div>
         )}
       </div>
-      <form className="container mb-3" onSubmit={RegisterUser}>
+      <form
+        className="container mb-4 rounded-3 bg-body"
+        onSubmit={RegisterUser}
+      >
         {/* alerta si si envio el usuario */}
-
+        <br />
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Nombre
@@ -138,6 +141,7 @@ export const Register = () => {
             />
           </button>
         </section>
+        <br />
       </form>
     </>
   );

@@ -40,44 +40,45 @@ export const Login = () => {
         window.location.href = "/";
       }, 750);
     } else {
-      setSaved("error");
+      if (password == " " || password == null) {
+        setSaved("error");
+      }
     }
   };
 
   return (
     <>
       <h2 className="text-center">inicia seccion aquí </h2>
-
-      <form className="container" onSubmit={Login}>
-        <div className="mb-3">
-          {saved == "saved" ? (
-            <div
-              class="alert alert-success alert-dismissible fade show container"
-              role="alert"
-            >
-              Login exitoso Iniciando sesion &nbsp;
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              ></button>
-            </div>
-          ) : (
-            <div
-              class="alert alert-danger alert-dismissible fade show container"
-              role="alert"
-            >
-              Error al hacer login favor inserte los datos correctamente
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              ></button>
-            </div>
-          )}
-        </div>
+      <div className="mb-3">
+        {saved == "saved" ? (
+          <div
+            class="alert alert-success alert-dismissible fade show container"
+            role="alert"
+          >
+            Login exitoso Iniciando sesion &nbsp;
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+        ) : (
+          <div
+            class="alert alert-danger alert-dismissible fade show container"
+            role="alert"
+          >
+            Error al hacer login favor inserte los datos correctamente
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+        )}
+      </div>
+      <form className="container p-4 mb-2 rounded-3 bg-body" onSubmit={Login}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Correo electronico

@@ -35,7 +35,7 @@ export const Navbar = () => {
           <strong>Farmacia Los Mameyes</strong>
         </Link>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -92,10 +92,17 @@ export const Navbar = () => {
                   </a>
                   <ul class="dropdown-menu">
                     <li>
+                      <Link class="dropdown-item" to="/user/profile">
+                        <i class="fa-solid fa-user"></i>&nbsp;Perfil
+                      </Link>
+                    </li>
+
+                    <li>
                       <Link class="dropdown-item" to="/user/settings">
                         <i class="fa-solid fa-gear"></i>&nbsp;Configuración
                       </Link>
                     </li>
+
                     <li>
                       <button onClick={logout} class="dropdown-item" href="#">
                         <i class="fa-solid fa-right-from-bracket"></i>
@@ -108,13 +115,13 @@ export const Navbar = () => {
             </>
           ) : (
             <>
-              <section class="d-flex" role="search">
+              <section class="d-flex m-2" role="search">
                 <Link to="/register" className="nav-link">
                   <i class="fa-solid fa-address-card"></i>Registro
                 </Link>
                 &nbsp;&nbsp;&nbsp;
               </section>
-              <section class="d-flex" role="search">
+              <section class="d-flex m-2" role="search">
                 <Link to="/login" className="nav-link">
                   <i class="fa-solid fa-right-to-bracket"></i>Login
                 </Link>
