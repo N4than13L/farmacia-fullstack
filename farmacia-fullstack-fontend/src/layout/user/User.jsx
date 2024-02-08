@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export const User = () => {
   const [saved, setSaved] = useState("");
-  // const [changed, form] = UseForm("");
+  const { changed, form } = UseForm({});
 
   // sacar datos de la session.
   var user = JSON.parse(localStorage.getItem("user"));
@@ -96,7 +96,7 @@ export const User = () => {
             className="form-control"
             name="name"
             id="nombre"
-            value={user.name}
+            defaultValue={user.name}
             aria-describedby="emailHelp"
           />
         </div>
@@ -110,7 +110,7 @@ export const User = () => {
             className="form-control"
             id="apellido"
             name="surname"
-            value={user.surname}
+            defaultValue={user.surname}
             aria-describedby="emailHelp"
           />
         </div>
@@ -124,7 +124,7 @@ export const User = () => {
             className="form-control"
             id="email"
             name="email"
-            value={user.email}
+            defaultValue={user.email}
             aria-describedby="emailHelp"
           />
         </div>
