@@ -162,12 +162,13 @@ export const Navbar = () => {
           ) : (
             <>
               <section className="d-flex" role="search">
+                &nbsp;&nbsp;&nbsp;
                 <Link to="/register" className="nav-link">
                   <i className="fa-solid fa-address-card"></i>Registro
                 </Link>
-                &nbsp;&nbsp;&nbsp;
               </section>
               <section className="d-flex" role="search">
+                &nbsp;&nbsp;&nbsp;
                 <Link to="/login" className="nav-link">
                   <i className="fa-solid fa-right-to-bracket"></i>Login
                 </Link>
