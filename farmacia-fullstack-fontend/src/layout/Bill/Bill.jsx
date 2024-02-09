@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Global } from "../../helpers/Global";
+import { Link } from "react-router-dom";
 
 export const Bill = () => {
   // funcion para recoger valores del formulario.
@@ -29,6 +30,12 @@ export const Bill = () => {
   return (
     <div className="container bg-body mt-3 rounded-3">
       <h1 className="text-center">Factura</h1>
+
+      {/* accion de agregar */}
+      <Link className="btn btn-success m-2" to="/">
+        <i className="fa-solid fa-plus"></i>
+      </Link>
+
       {bill?.map((bill) => {
         return (
           <article className="card card-body p-4 mb-3" key={bill.id}>
@@ -52,6 +59,15 @@ export const Bill = () => {
 
             <strong>Creado el: </strong>
             <p> {bill.created_at}</p>
+
+            {/* acciones de eliminar y editar */}
+            <Link className="btn btn-warning m-2 btn-sm" to="/">
+              <i className="fa-solid fa-pen-to-square"></i>
+            </Link>
+
+            <Link className="btn btn-danger m-2 btn-sm" to="/">
+              <i className="fa-solid fa-trash"></i>
+            </Link>
           </article>
         );
       })}
