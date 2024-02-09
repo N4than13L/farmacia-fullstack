@@ -16,7 +16,7 @@ class TypeMedicineController extends Controller
         $data = array(
             "status" => "success",
             "code" => 200,
-            "secondary_effects" => $type_medicine
+            "type_medicine" => $type_medicine
         );
 
         return response()->json($data, $data['code']);
@@ -56,7 +56,7 @@ class TypeMedicineController extends Controller
                 "code" => 200,
                 "message" => "tipo de medicina guardada con exito",
                 "user" => $user->name . " " . $user->surname,
-                "secondary_effects" => $type_medicine,
+                "type_medicine" => $type_medicine,
             );
         } else {
             $data = array(
@@ -130,7 +130,7 @@ class TypeMedicineController extends Controller
                 "status" => "success",
                 "code" => 200,
                 "user" => $user->name . " " . $user->surname,
-                "secondary_effects" => $type_medicine,
+                "type_medicine" => $type_medicine,
             );
         }
 

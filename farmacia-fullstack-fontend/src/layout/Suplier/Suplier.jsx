@@ -1,9 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Global } from "../../helpers/Global.js";
 
+// supplier/index
 export const Suplier = () => {
+  // funcion para recoger valores del formulario.
+  const [saved, setSaved] = useState("error");
+  const [suplier, setPaciente] = useState([{}]);
+
+  useEffect(() => {
+    Suplier();
+  });
+
+  let token = localStorage.getItem("token");
+
+  const Suplier = async () => {
+    const request = await fetch(Global.url + "supplier/index", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+
+    const data = await request.json();
+    setPaciente(data.suplier);
+  };
+
   return (
     <div className="container bg-body mt-3 rounded-3">
       <h1 className="text-center">Suplidor</h1>
+
+      {suplier?.map((supp) => {
+        return (
+          <article className="card card-body p-4 mb-3" key={supp.id}>
+            <h5>
+              <ins></ins>
+            </h5>
+            <strong>Id: </strong>
+            <p> {supp.id}</p>
+
+            <strong>Nombre: </strong>
+            <p> {supp.name}</p>
+            <strong>télefono: </strong>
+            <p> {supp.phone}</p>
+            <strong>direción: </strong>
+            <p> {supp.address}</p>
+
+            <strong>email: </strong>
+            <p> {supp.email}</p>
+
+            <strong>rnc: </strong>
+            <p> {supp.rnc}</p>
+
+            <strong>creado el: </strong>
+            <p> {supp.created_at}</p>
+          </article>
+        );
+      })}
     </div>
   );
 };

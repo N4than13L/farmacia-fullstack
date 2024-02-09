@@ -27,10 +27,10 @@ export const Navbar = () => {
 
   return (
     <nav
-      class="navbar navbar-expand-lg"
+      className="navbar navbar-expand-lg"
       style={{ backgroundColor: "rgb(77, 130, 214)" }}
     >
-      <div class="container-fluid">
+      <div className="container-fluid">
         <Link to="/" className="nav-link active" aria-current="page">
           <h3>Farmacia Los Mameyes</h3>
         </Link>
@@ -43,109 +43,133 @@ export const Navbar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           {!!setPerfil && usuario != null ? (
             <>
-              <ul class="navbar-nav me-auto mb-lg-0">
-                <li class="nav-item">
+              <ul className="navbar-nav me-auto mb-lg-0">
+                <li className="nav-item">
                   <Link to="/" className="nav-link active" aria-current="page">
-                    <i class="fa-solid fa-house"></i>&nbsp;Inicio
+                    <i className="fa-solid fa-house"></i>&nbsp;Inicio
                   </Link>
                 </li>
 
-                <li class="nav-item">
+                <li className="nav-item">
                   <Link
                     to="/client"
                     className="nav-link active"
                     aria-current="page"
                   >
-                    <i class="fa-brands fa-intercom"></i>&nbsp;clientes
+                    <i className="fa-brands fa-intercom"></i>&nbsp;clientes
                   </Link>
                 </li>
 
-                <li class="nav-item">
+                <li className="nav-item">
                   <Link
                     to="/bill"
                     className="nav-link active"
                     aria-current="page"
                   >
-                    <i class="fa-solid fa-file-invoice"></i>&nbsp;factura
+                    <i className="fa-solid fa-file-invoice"></i>&nbsp;factura
                   </Link>
                 </li>
 
-                <li class="nav-item">
+                <li className="nav-item">
                   <Link
                     to="/suplier"
                     className="nav-link active"
                     aria-current="page"
                   >
-                    <i class="fa-solid fa-truck-field"></i>&nbsp;Suplidores
+                    <i className="fa-solid fa-truck-field"></i>&nbsp;Suplidores
                   </Link>
                 </li>
 
-                <li class="nav-item">
-                  <Link
-                    to="/medicine"
-                    className="nav-link active"
-                    aria-current="page"
-                  >
-                    <i class="fa-solid fa-syringe"></i>&nbsp;medicamentos
-                  </Link>
-                </li>
-
-                <li class="nav-item dropdown">
+                {/* medicamentos */}
+                <strong className="nav-item dropdown">
                   <a
-                    class="nav-link dropdown-toggle"
+                    className="nav-link dropdown-toggle"
                     href="#"
                     role="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    {!!setPerfil && usuario != null ? (
-                      <p>
-                        <i class="fa-solid fa-user"></i>&nbsp;{usuario.name}
-                        {usuario.surname}
-                      </p>
-                    ) : (
-                      <p></p>
-                    )}
+                    <i className="fa-solid fa-syringe"></i> Medicamentos
                   </a>
-                  <ul class="dropdown-menu">
+                  <ul className="dropdown-menu" id="drop">
                     <li>
-                      <Link class="dropdown-item" to="/user/profile">
-                        <i class="fa-solid fa-user"></i>&nbsp;Perfil
+                      <Link className="dropdown-item" to="/medicine">
+                        <i className="fa-solid fa-syringe"></i>
+                        &nbsp;Medicamentos
                       </Link>
                     </li>
 
                     <li>
-                      <Link class="dropdown-item" to="/user/settings">
-                        <i class="fa-solid fa-gear"></i>&nbsp;Configuración
+                      <Link className="dropdown-item" to="/typemedicine">
+                        <i className="fa-solid fa-rectangle-list"></i>&nbsp;Tipo
+                        de medicamentos
                       </Link>
                     </li>
 
                     <li>
-                      <button onClick={logout} class="dropdown-item" href="#">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        &nbsp;Cerrar sesion
-                      </button>
+                      <Link className="dropdown-item" to="/seceffects">
+                        <i className="fa-solid fa-clipboard-list"></i>{" "}
+                        &nbsp;Efectos secundarios
+                      </Link>
                     </li>
                   </ul>
-                </li>
+                </strong>
               </ul>
+              <strong className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {!!setPerfil && usuario != null ? (
+                    <p>
+                      <i className="fa-solid fa-user"></i>&nbsp;{usuario.name}
+                      {usuario.surname}
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
+                </a>
+                <ul className="dropdown-menu" id="drop">
+                  <li>
+                    <Link className="dropdown-item" to="/user/profile">
+                      <i className="fa-solid fa-user"></i>&nbsp;Perfil
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link className="dropdown-item" to="/user/settings">
+                      <i className="fa-solid fa-gear"></i>&nbsp;Configuración
+                    </Link>
+                  </li>
+
+                  <li>
+                    <button onClick={logout} className="dropdown-item" href="#">
+                      <i className="fa-solid fa-right-from-bracket"></i>
+                      &nbsp;Cerrar sesion
+                    </button>
+                  </li>
+                </ul>
+              </strong>
             </>
           ) : (
             <>
-              <section class="d-flex" role="search">
+              <section className="d-flex" role="search">
                 <Link to="/register" className="nav-link">
-                  <i class="fa-solid fa-address-card"></i>Registro
+                  <i className="fa-solid fa-address-card"></i>Registro
                 </Link>
                 &nbsp;&nbsp;&nbsp;
               </section>
-              <section class="d-flex" role="search">
+              <section className="d-flex" role="search">
                 <Link to="/login" className="nav-link">
-                  <i class="fa-solid fa-right-to-bracket"></i>Login
+                  <i className="fa-solid fa-right-to-bracket"></i>Login
                 </Link>
               </section>
             </>
