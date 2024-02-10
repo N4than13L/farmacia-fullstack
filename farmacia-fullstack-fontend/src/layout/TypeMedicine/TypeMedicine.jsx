@@ -32,7 +32,7 @@ export const TypeMedicine = () => {
       <h1 className="text-center">Tipo de medicinas</h1>
 
       {/* accion de agregar */}
-      <Link className="btn btn-success m-2" to="/">
+      <Link className="btn btn-success m-2" to="/add/typemedicine">
         <i className="fa-solid fa-plus"></i>
       </Link>
 
@@ -44,6 +44,9 @@ export const TypeMedicine = () => {
             </h5>
             <strong>Nombre: </strong>
             <p> {type.name}</p>
+
+            <strong>Creado el: </strong>
+            <p> {type.created_at}</p>
 
             {/* acciones de eliminar y editar */}
             <Link className="btn btn-warning m-2 btn-sm" to="/">

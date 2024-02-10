@@ -23,7 +23,7 @@ export const Client = () => {
     });
 
     const data = await request.json();
-    console.log(data);
+    // console.log(data);
     if (data.status == "success") {
       setPaciente(data.client);
     }
@@ -33,7 +33,7 @@ export const Client = () => {
     <div className="container bg-body mt-3 rounded-3">
       <h1 className="text-center">Clientes</h1>
       {/* accion de agregar */}
-      <Link className="btn btn-success m-2" to="/">
+      <Link className="btn btn-success m-2" to="/add/client">
         <i className="fa-solid fa-plus"></i>
       </Link>
       {client?.map((client) => {
