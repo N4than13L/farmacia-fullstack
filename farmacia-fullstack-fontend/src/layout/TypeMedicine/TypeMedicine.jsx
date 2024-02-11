@@ -9,7 +9,7 @@ export const TypeMedicine = () => {
 
   useEffect(() => {
     typemedicine();
-  });
+  }, []);
 
   let token = localStorage.getItem("token");
 

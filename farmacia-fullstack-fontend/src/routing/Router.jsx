@@ -20,6 +20,8 @@ import { Bill } from "../layout/Bill/Bill";
 import { AddSecEffects } from "../layout/SecEfects/AddSecEffects";
 import { AddTypeMedicine } from "../layout/TypeMedicine/AddTypeMedicine";
 import { AddClient } from "../layout/Client/AddClient";
+import { AddSupplier } from "../layout/Suplier/AddSupplier";
+import { AddMedicine } from "../layout/medicine/AddMedicine";
 
 export const Router = () => {
   return (
@@ -45,6 +47,8 @@ export const Router = () => {
         <Route path="/add/seceffects" element={<AddSecEffects />} />
         <Route path="/add/typemedicine" element={<AddTypeMedicine />} />
         <Route path="/add/client" element={<AddClient />} />
+        <Route path="/add/supplier" element={<AddSupplier />} />
+        <Route path="/add/medicine" element={<AddMedicine />} />
       </Routes>
       <Footer />
     </BrowserRouter>

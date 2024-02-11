@@ -32,7 +32,7 @@ export const Suplier = () => {
       <h1 className="text-center">Suplidor</h1>
 
       {/* accion de agregar */}
-      <Link className="btn btn-success m-2" to="/">
+      <Link className="btn btn-success m-2" to="/add/supplier">
         <i className="fa-solid fa-plus"></i>
       </Link>
 
