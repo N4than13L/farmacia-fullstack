@@ -4,20 +4,23 @@ import { Global } from "../../helpers/Global.js";
 export const AddMedicine = () => {
   // funcion para recoger valores del formulario.
   const [saved, setSaved] = useState("");
-  const [suplier, setPaciente] = useState([{}]);
+  const [suplier, setSuplier] = useState([{}]);
   const [secondary_effects, setSecEfects] = useState([{}]);
   const [type_medicine, setTipeMedicine] = useState([{}]);
 
   useEffect(() => {
     Suplier();
+    setSuplier(suplier);
   }, []);
 
   useEffect(() => {
     Seceffects();
+    setSecEfects(secondary_effects);
   }, []);
 
   useEffect(() => {
     typemedicine();
+    setTipeMedicine(type_medicine);
   }, []);
 
   const typemedicine = async () => {
@@ -31,7 +34,7 @@ export const AddMedicine = () => {
 
     const data = await request.json();
     // console.log(data);
-    setPaciente(data.type_medicine);
+    setTipeMedicine(data.type_medicine);
   };
 
   //   sacar suplidor
@@ -46,7 +49,7 @@ export const AddMedicine = () => {
 
     const data = await request.json();
     // console.log(data.suplier);
-    setPaciente(data.suplier);
+    setSuplier(data.suplier);
   };
 
   //   sacar efectos secundarios
@@ -61,7 +64,7 @@ export const AddMedicine = () => {
 
     const data = await request.json();
     // console.log(data);
-    setPaciente(data.secondary_effects);
+    setSecEfects(data.secondary_effects);
   };
 
   let token = localStorage.getItem("token");
@@ -72,14 +75,24 @@ export const AddMedicine = () => {
 
     // recoger los datos del formulario.
     let name = document.getElementById("name").value;
+    let supplier_id = document.getElementById("sec_effects_id").value;
+
+    let sec_effects_id = document.getElementById("sec_effects_id").value;
+
+    let type_medicine_id = document.getElementById("type_medicine_id").value;
 
     let medicine = {
       name: name,
+      type_medicine_id: type_medicine_id,
+      sec_effects_id: sec_effects_id,
+      supplier_id: supplier_id,
     };
+
+    console.log(medicine);
 
     var token = localStorage.getItem("token");
 
-    const request = await fetch(Global.url + "", {
+    const request = await fetch(Global.url + "mediccine/save", {
       method: "POST",
       body: JSON.stringify(medicine),
       headers: {
@@ -146,7 +159,7 @@ export const AddMedicine = () => {
         </div>
 
         {/* suplidor */}
-        <select class="form-select mb-3">
+        <select class="form-select mb-3" id="supplier_id">
           <option selected>Suplidor</option>
           {suplier?.map((sup) => {
             return (
@@ -158,7 +171,7 @@ export const AddMedicine = () => {
         </select>
 
         {/* efecto secundario */}
-        <select class="form-select mb-3">
+        <select class="form-select mb-3" id="sec_effects_id">
           <option selected>Efectos secundario</option>
           {secondary_effects?.map((sec) => {
             return (
@@ -169,11 +182,15 @@ export const AddMedicine = () => {
           })}
         </select>
 
-        {/* efecto secundario */}
-        <select class="form-select mb-3">
+        {/* tipo de medicina */}
+        <select class="form-select mb-3" id="type_medicine_id">
           <option selected>Tipo de Medicamento</option>
           {type_medicine?.map((sec) => {
-            return <option key={sec.id}>{sec.name}</option>;
+            return (
+              <option key={sec.id} value={sec.id}>
+                {sec.name}
+              </option>
+            );
           })}
         </select>
 

@@ -32,7 +32,7 @@ export const Bill = () => {
       <h1 className="text-center">Factura</h1>
 
       {/* accion de agregar */}
-      <Link className="btn btn-success m-2" to="/">
+      <Link className="btn btn-success m-2" to="/add/bill">
         <i className="fa-solid fa-plus"></i>
       </Link>
 

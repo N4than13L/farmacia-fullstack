@@ -22,6 +22,7 @@ import { AddTypeMedicine } from "../layout/TypeMedicine/AddTypeMedicine";
 import { AddClient } from "../layout/Client/AddClient";
 import { AddSupplier } from "../layout/Suplier/AddSupplier";
 import { AddMedicine } from "../layout/medicine/AddMedicine";
+import { AddBill } from "../layout/Bill/AddBill";
 
 export const Router = () => {
   return (
@@ -49,6 +50,7 @@ export const Router = () => {
         <Route path="/add/client" element={<AddClient />} />
         <Route path="/add/supplier" element={<AddSupplier />} />
         <Route path="/add/medicine" element={<AddMedicine />} />
+        <Route path="/add/bill" element={<AddBill />} />
       </Routes>
       <Footer />
     </BrowserRouter>
