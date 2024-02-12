@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 export const SecEffects = () => {
   // funcion para recoger valores del formulario.
-  const [saved, setSaved] = useState("error");
   const [secondary_effects, setPaciente] = useState([{}]);
+  const [detail, setDetail] = useState([{}]);
 
   useEffect(() => {
     seceffects();
-  });
+  }, []);
 
   let token = localStorage.getItem("token");
 
@@ -25,6 +25,20 @@ export const SecEffects = () => {
     const data = await request.json();
     // console.log(data);
     setPaciente(data.secondary_effects);
+  };
+
+  const Detail = async (id) => {
+    const request = await fetch(Global.url + "seceffects/detail/" + id, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+
+    const data = await request.json();
+    // console.log(data);
+    setDetail(data.detail);
   };
 
   return (
@@ -51,10 +65,6 @@ export const SecEffects = () => {
             {/* acciones de eliminar y editar */}
             <Link className="btn btn-warning m-2 btn-sm" to="/">
               <i className="fa-solid fa-pen-to-square"></i>
-            </Link>
-
-            <Link className="btn btn-danger m-2 btn-sm" to="/">
-              <i className="fa-solid fa-trash"></i>
             </Link>
           </article>
         );

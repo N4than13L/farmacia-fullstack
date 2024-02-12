@@ -9,7 +9,7 @@ export const Bill = () => {
 
   useEffect(() => {
     Bill();
-  });
+  }, []);
 
   let token = localStorage.getItem("token");
 

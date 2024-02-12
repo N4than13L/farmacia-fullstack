@@ -9,7 +9,7 @@ export const Client = () => {
 
   useEffect(() => {
     Client();
-  });
+  }, []);
 
   let token = localStorage.getItem("token");
 

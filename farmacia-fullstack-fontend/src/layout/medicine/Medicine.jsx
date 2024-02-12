@@ -9,7 +9,7 @@ export const Medicine = () => {
 
   useEffect(() => {
     Medicine();
-  });
+  }, []);
 
   let token = localStorage.getItem("token");
 

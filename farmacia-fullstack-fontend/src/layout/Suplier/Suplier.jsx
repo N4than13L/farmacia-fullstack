@@ -10,7 +10,7 @@ export const Suplier = () => {
 
   useEffect(() => {
     Suplier();
-  });
+  }, []);
 
   let token = localStorage.getItem("token");
 
